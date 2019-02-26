@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from flask_cors import CORS, cross_origin
 import datetime
 import json
 
@@ -7,6 +8,7 @@ from logic.quiz_master import QuizMaster
 from logic.user_cache import UserCache
 
 app = Flask(__name__)
+CORS(app)
 qm = QuizMaster()
 user_cache = UserCache()
 names = NameRegistrar()
@@ -30,7 +32,8 @@ def register():
     user_cache.register_user(user_ip, user_name)
 
   
-  return "{} - {}".format(user_name, user_ip)
+  # return "{} - {}".format(user_name, user_ip)
+  return json.dumps({"your_name": user_name})
 
 @app.route("/next_question")
 def next_question():
@@ -39,7 +42,10 @@ def next_question():
   if next_question:
     return json.dumps(next_question.to_dict())
   else:
-    return "You finished the quiz, yay!"
+    return json.dumps({
+      "question": "",
+      "answers": []
+    })
 
 @app.route("/answer_question", methods=['POST'])
 def answer_question():
@@ -61,6 +67,11 @@ def debug_quiz():
 def reset_quiz():
   qm.reset_quiz()
   return json.dumps({"result": "Quiz Reset!"})
+
+@app.route("/reset_names")
+def reset_names():
+  user_cache.reset()
+  return json.dumps({"result": "Names Reset!"})
 
 
 if __name__ == "__main__":

@@ -1,6 +1,5 @@
 // (function() {
 const resetQuiz = async () => {
-  console.log("ding dong")
   const response = await fetch('/reset_quiz', {
     method: 'GET',
     // body: myBody, // string or object
@@ -10,7 +9,20 @@ const resetQuiz = async () => {
   });
   const myJson = await response.json(); //extract JSON from the http response
   console.log(myJson);
-  // do something with myJson
+  // we could do something with myJson
+}
+
+const resetUsers = async () => {
+  const response = await fetch('/reset_names', {
+    method: 'GET',
+    // body: myBody, // string or object
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  });
+  const myJson = await response.json(); //extract JSON from the http response
+  console.log(myJson);
+  // we could do something with myJson
 }
 
 

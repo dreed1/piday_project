@@ -1,10 +1,8 @@
-
-
 class UserCache(object):
   def __init__(self):
-    self._reset_quiz();
+    self.reset();
 
-  def _reset_quiz(self):
+  def reset(self):
     self.ip_to_names_cache = {}
 
   def register_user(self, user_ip, user_name):

@@ -1,4 +1,5 @@
 import enum
+import uuid
 
 question_text_key = "question"
 
@@ -14,6 +15,7 @@ class AnswerType(enum.Enum):
 
 class QuizAnswer(object):
   def __init__(self, dictionary):
+    self.id = str(uuid.uuid4())
     self.answer_text = "Answer text"
     self.answer_value = "Answer value"
     self.image_url = "https://mymodernmet.com/wp/wp-content/uploads/2018/04/cats-in-food-11.jpg"
@@ -29,6 +31,7 @@ class QuizAnswer(object):
 
   def to_dict(self):
     return {
+      "id": self.id,
       "text": self.answer_text,
       "value": self.answer_value,
       "answer_type": self.answer_type.value,
@@ -38,6 +41,7 @@ class QuizAnswer(object):
 
 class QuizQuestion(object):
   def __init__(self, dictionary):
+    self.id = str(uuid.uuid4())
     self.question_text = ""
     self.answers = []
     self.process_dictionary(dictionary)
@@ -51,6 +55,7 @@ class QuizQuestion(object):
 
   def to_dict(self):
     return {
+      "id": self.id,
       "question": self.question_text,
       "answers": [a.to_dict() for a in self.answers]
     }
