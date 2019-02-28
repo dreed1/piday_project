@@ -22,3 +22,6 @@ class UserCache(object):
       return self.ip_to_names_cache[user_ip]
     print("That user doesnt exit in the names cache")
     return None
+
+  def all_registered_names(self):
+    return self.ip_to_names_cache.values()

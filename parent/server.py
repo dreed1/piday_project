@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS, cross_origin
+from flask_socketio import SocketIO, emit
+#https://flask-socketio.readthedocs.io/en/latest/
+
 import datetime
 import json
 
@@ -9,6 +12,7 @@ from logic.user_cache import UserCache
 
 app = Flask(__name__)
 CORS(app)
+socketio = SocketIO(app)
 qm = QuizMaster()
 user_cache = UserCache()
 names = NameRegistrar()
@@ -31,7 +35,7 @@ def register():
     user_name = names.name_me()
     user_cache.register_user(user_ip, user_name)
 
-  
+    emit('user registry change', user_cache.all_registered_names())
   # return "{} - {}".format(user_name, user_ip)
   return json.dumps({"your_name": user_name})
 
@@ -60,7 +64,7 @@ def random_name():
 
 @app.route("/all_quiz")
 def debug_quiz():
-  questions = [q.to_dict() for q in qm.questions] 
+  questions = [q.to_dict() for q in qm.questions]
   return json.dumps(questions)
 
 @app.route("/reset_quiz")
@@ -75,4 +79,5 @@ def reset_names():
 
 
 if __name__ == "__main__":
-   app.run(host='0.0.0.0', port=80, debug=True)
+  socketio.run(app, host='0.0.0.0', port=80, debug=True)
+   # app.run(host='0.0.0.0', port=80, debug=True)
