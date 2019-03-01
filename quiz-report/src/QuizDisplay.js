@@ -23,7 +23,7 @@ class QuizDisplay extends Component {
 		socket.on('connect', function(){
 			console.log("Quiz display is connected to the socket");
 		});
-  	socket.on('answers updated', function(msg){
+  	socket.on('quiz state', function(msg){
   		const quizResults = msg["quiz_results"]
   		if (quizResults) {
   			_this.setState({questions: quizResults});
@@ -46,9 +46,8 @@ class QuizDisplay extends Component {
 		const userCount = this.state.userCount;
 		const questions = this.state.questions.map((question) => <QuizQuestion key={question.id} questionText={question.question} answers={question.answers} userCount={userCount} />);
 		return (
-      <div className="QuizDisplay">
-        <div>There are {userCount} users registered for the quiz.</div>
-        <div>{questions}</div>
+      <div className="QuizContainer">
+        <div className="QuizDisplay">{questions}</div>
       </div>
     );
 	}

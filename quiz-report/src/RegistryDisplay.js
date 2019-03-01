@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
+import UserRegistry from './UserRegistry';
 
 class RegistryDisplay extends Component {
 	constructor(props) {
@@ -21,8 +22,9 @@ class RegistryDisplay extends Component {
 		// socket.on('connect', function(){
 			// console.log("I am connected to the socket");
 		// });
-  	socket.on('user registry change', function(msg){
-      console.log("registry display got user reg change")
+    //new_username
+  	socket.on('user registry state', function(msg){
+      console.log("registry display got user registration state")
   	 	var newUserNames = msg["user_names"]
   	 	// var userToIPMap = msg["all_users"]
   	 	// console.log(userToIPMap)
@@ -30,15 +32,27 @@ class RegistryDisplay extends Component {
   	 		_this.setState({userNames: newUserNames});
   	 	}
   	});
+    socket.on('user registry change', function(msg){
+      console.log("registry display got user reg addition")
+      var newUsername = msg["new_username"]
+
+      if (newUsername) {
+        _this.setState({userNames: [newUsername]});
+      }
+    });
   	// socket.on('disconnect', function(){});
 	}
 
+  // addNewUser(userName) {
+  //   var
+  // }
+
 	render() {
-		const userNames = this.state.userNames.map((userName) => <div key={userName}>{userName}</div>);
+		const userNames = this.state.userNames.map((userName) => <UserRegistry key={userName} username={userName} />);
     return (
       <div className="RegistryDisplay">
-        <div>There are currently {this.state.userNames.length} users registered.</div>
-        <ul>{ userNames }</ul>
+        <div className="RegistryHeader">There are currently {this.state.userNames.length} users registered.</div>
+        <div>{ userNames }</div>
       </div>
     );
   }

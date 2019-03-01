@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import io from 'socket.io-client';
 import { ResponsivePie } from '@nivo/pie'
 
 class QuestionGraph extends Component {
@@ -7,19 +8,59 @@ class QuestionGraph extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      graphData: this.props.graphData
+      graphData: this.props.graphData,
+      colorPalette: this.poorlyChooseARandomColorPalette()
     };
+    ;
+  }
+
+  componentDidMount() {
+		this.socketStuff();
+	}
+
+	socketStuff() {
+		var _this = this;
+		const socket = io('http://localhost');
+		// socket.on('connect', function(){
+		// 	console.log("A Question Graph is connected to the socket");
+		// });
+  	socket.on('new answer', function(msg){
+  		const quizResults = msg["quiz_results"]
+  		if (quizResults) {
+  			_this.setState({questions: quizResults});
+  			console.log("Got new quiz state");
+  			console.log(quizResults);
+  		}
+  	});
+  	// socket.on('disconnect', function(){});
+	}
+
+  poorlyChooseARandomColorPalette() {
+  	const allColorPalettes = ['nivo', 'category10', 'accent', 'dark2', 'paired', 'pastel1', 'pastel2'];
+  	var index = Math.floor(Math.random() * 10000) % allColorPalettes.length;
+  	const thisPalette = allColorPalettes[index];
+  	console.log("this pallete: " + thisPalette)
+  	console.log("from " + index)
+  	return thisPalette;
+  	// this.setState({colorPalette: allColorPalettes[index]});
   }
 
 	render() {
+		const palette = this.state.colorPalette;
 		var graphData = this.state.graphData;
 		return (
         <ResponsivePie
         data={graphData}
+        margin={{
+            "top": 40,
+            "right": 40,
+            "bottom": 60,
+            "left": 40
+        }}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
-        colors="nivo"
+        colors={palette}
         colorBy="id"
         borderWidth={2}
         borderColor="inherit:darker(0.3)"
@@ -56,65 +97,15 @@ class QuestionGraph extends Component {
                 "spacing": 10
             }
         ]}
-        fill={[
-            {
-                "match": {
-                    "id": "ruby"
-                },
-                "id": "dots"
-            },
-            {
-                "match": {
-                    "id": "c"
-                },
-                "id": "dots"
-            },
-            {
-                "match": {
-                    "id": "go"
-                },
-                "id": "dots"
-            },
-            {
-                "match": {
-                    "id": "python"
-                },
-                "id": "dots"
-            },
-            {
-                "match": {
-                    "id": "scala"
-                },
-                "id": "lines"
-            },
-            {
-                "match": {
-                    "id": "lisp"
-                },
-                "id": "lines"
-            },
-            {
-                "match": {
-                    "id": "elixir"
-                },
-                "id": "lines"
-            },
-            {
-                "match": {
-                    "id": "javascript"
-                },
-                "id": "lines"
-            }
-        ]}
         legends={[
             {
-                "anchor": "bottom",
-                "direction": "row",
+                "anchor": "bottom-left",
+                "direction": "column",
                 "translateY": 56,
-                "itemWidth": 100,
+                "itemWidth": 120,
                 "itemHeight": 18,
                 "itemTextColor": "#999",
-                "symbolSize": 18,
+                "symbolSize": 24,
                 "symbolShape": "circle",
                 "effects": [
                     {

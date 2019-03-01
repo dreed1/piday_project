@@ -17,7 +17,7 @@ class QuizQuestion extends Component {
   graphData() {
   	var answersReceived = 0
   	var userAnswers = this.state.answers.map((a) => {
-  		var userCountForThisAnswer = a.user_ips_with_answer.length
+  		var userCountForThisAnswer = a.answers_count
   		answersReceived += userCountForThisAnswer
   		// console.log("I now have more answers:" + answersReceived)
   		// console.log("And I expect: " + this.props.userCount)
@@ -41,14 +41,12 @@ class QuizQuestion extends Component {
 
 	render() {
 		const graphData = this.graphData();
-		const answersList = this.state.answers.map((a) => <div key={a.id}>{a.text} has {a.user_ips_with_answer.length} answers</div>);
 		return (
-      <div className="QuestionGraph">
-        <div>Im a question in this quiz.</div>
-        <div>My question: '{this.state.questionText}'</div>
-        <div> Possible Answers:</div>
-        <div>{answersList}</div>
-        <QuestionGraph key={this.state.id} graphData={graphData} />
+      <div className="QuizQuestion">
+        <div className="QuestionText">{this.state.questionText}</div>
+        <div className="QuestionGraph">
+        	<QuestionGraph key={this.state.id} graphData={graphData} />
+        </div>
       </div>
     );
 	}

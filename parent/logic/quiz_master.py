@@ -50,10 +50,8 @@ class QuizMaster(object):
     if next_quiz_step < len(self.questions) + 1:
       self.ip_to_quiz_step_cache[user_ip_string] = next_quiz_step
 
-  def answer_question_with_params(self, user_ip, params):
+  def answer_question_with_answer_id(self, user_ip, question_id, answer_id):
     user_ip_string = "{}".format(user_ip)
-    question_id = params["question_id"]
-    answer_id = params["answer_id"]
 
     if question_id == None or answer_id == None or user_ip == None:
       return False
@@ -64,3 +62,12 @@ class QuizMaster(object):
         self._move_user_to_next_question_step(user_ip_string)
         return True
     return False
+
+  def get_count_for_answer(self, answer_id, question_id):
+    for question in self.questions:
+      if question.id == question_id:
+        for answer in question.answers:
+          if answer.id == answer_id:
+            return len(answer.user_ips_with_answer)
+    return 0
+

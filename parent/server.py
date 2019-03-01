@@ -23,20 +23,36 @@ names = NameRegistrar()
 #socket comms
 @socketio.on('connect')
 def post_all_the_data():
-  post_user_registry()
-  post_answers_updated()
+  post_user_state()
+  post_quiz_state()
 
-def post_user_registry():
-  print("posting user registry")
-  emit('user registry change', {"user_names" :user_cache.all_registered_names(), "all_users": user_cache.ip_to_names_cache, "user_count": len(user_cache.all_registered_names())}, namespace='/', broadcast=True)
+def post_user_state():
+  # print("posting user registry")
+  emit('user registry state',
+    {
+      "user_names" :user_cache.all_registered_names(),
+      "all_users": user_cache.ip_to_names_cache,
+      "user_count": len(user_cache.all_registered_names())
+    },
+    namespace='/',
+    broadcast=True
+  )
 
-def post_answers_updated():
-  print("posting quiz state")
-  emit('answers updated', {"quiz_results" : qm.quiz_state()}, namespace='/', broadcast=True)
+def post_user_registry(new_username):
+  # print("posting new user")
+  emit('user registry change', { "new_username" :new_username }, namespace='/', broadcast=True)
+
+def post_quiz_state():
+  # print("posting quiz state")
+  emit('quiz state', {"quiz_results" : qm.quiz_state()}, namespace='/', broadcast=True)
+
+def post_answer_updated(answer_id, question_id):
+  # print("posting new count for an answer")
+  newCount = qm.get_count_for_answer(answer_id, question_id)
+  emit('new answer', {"answer_id" : answer_id, "question_id": question_id, "count": newCount}, namespace='/', broadcast=True)
 
 def names_have_been_reset():
-  post_user_registry()
-  post_answers_updated()
+  post_all_the_data()
 
 def quiz_reset():
   emit('quiz reset', {"foo" : "bar"}, namespace='/', broadcast=True)
@@ -60,7 +76,7 @@ def _register_user_with_ip(user_ip):
   else:
     user_name = names.name_me()
     user_cache.register_user(user_ip, user_name)
-    post_user_registry()
+    post_user_registry(user_name)
   return user_name
 
 @app.route("/next_question")
@@ -86,8 +102,10 @@ def answer_question():
   return json.dumps({"result": result})
 
 def _answer_question_with_ip_and_params(user_ip, params):
-  result = qm.answer_question_with_params(user_ip, params)
-  post_answers_updated()
+  question_id = params["question_id"]
+  answer_id = params["answer_id"]
+  result = qm.answer_question_with_answer_id(user_ip, question_id, answer_id)
+  post_answer_updated(answer_id, question_id)
   print("Did that work? {}".format(result))
   return result
 
@@ -137,8 +155,9 @@ def reset_names():
 @app.route("/test_a_bunch_of_users")
 def test_a_bunch_of_users():
   user_ip = request.remote_addr
+  print("lemme test a bunch of fake users")
   if (should_allow_admin_access(user_ip)):
-    fake_user_ips = _create_fake_user_ips(50)
+    fake_user_ips = _create_fake_user_ips(10)
     _register_fake_users_with_ips(fake_user_ips)
     _simulate_quiz_for_users_with_ips(fake_user_ips)
     return json.dumps({"result": "I created {} users and put them through the quiz".format(len(fake_user_ips))})
@@ -176,14 +195,11 @@ def _simulate_quiz_for_user_with_ip(user_ip):
 
 def _answer_question_randomly_for_user_with_ip(user_ip, question):
   fake_answer_params = _simulate_random_answer_for_question(question)
-  # print(fake_answer_params)
   _answer_question_with_ip_and_params(user_ip, fake_answer_params)
 
 def _simulate_random_answer_for_question(question):
-  # print("question: {}".format(question))
   number_of_answers = len(question.answers)
   chosen_answer_idx = random.randint(0, number_of_answers - 1)
-  # print("I have  {} choices and I picked {}".format(number_of_answers, chosen_answer_idx))
   random_answer = question.answers[chosen_answer_idx]
   return {
     "question_id": question.id,
@@ -192,4 +208,3 @@ def _simulate_random_answer_for_question(question):
 
 if __name__ == "__main__":
   socketio.run(app, host='0.0.0.0', port=80, debug=True)
-   # app.run(host='0.0.0.0', port=80, debug=True)

@@ -40,7 +40,7 @@ class QuizAnswer(object):
     }
 
     if include_answer_state:
-      d.update({"user_ips_with_answer": self.user_ips_with_answer})
+      d.update({"answers_count": len(self.user_ips_with_answer)})
 
     return d
 

@@ -1,33 +1,81 @@
 .App {
-  text-align: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.DisplayContainer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-flow: row nowrap;
+  height: 100%;
+  width: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+.RegistryDisplay {
+  height: 100%;
+  flex-basis: 37%;
+  overflow-y: scroll;
+}
+
+.QuizDisplay {
+  height: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  overflow-y: scroll;
+  flex-basis: 61%;
+}
+
+.QuizQuestion {
+  height: 400px;
+  flex-grow: 1;
+  flex-basis: 48%;
+  border: 1px solid #f2f2f2;
+  margin: 4px;
+}
+
+.QuestionText {
+  margin: 20px 10px 20px 10px;
+  text-align: center;
 }
 
 .QuestionGraph {
   height: 300px;
 }
 
-@keyframes App-logo-spin {
+/*registry*/
+.JustCreated {
+  animation: name-spin 1 2s linear;
+  background-color: #147832;
+}
+
+.justVoted {
+  background-color:#915974;
+}
+
+.Inactive {
+  background-color: white;
+}
+
+.QuizComplete {
+  background-color:#485672;
+}
+
+.RegistryHeader {
+  text-align: center;
+  padding: 8px 0 8px 0;
+  margin: 0 8px 0 8px;
+  border-bottom: 1px solid #dadada;
+}
+
+.UserName {
+  text-align: center;
+  width: 100%;
+  margin: 6px 3px 6px 3px;
+}
+
+
+@keyframes name-spin {
   from {
     transform: rotate(0deg);
   }
