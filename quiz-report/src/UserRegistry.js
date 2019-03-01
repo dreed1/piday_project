@@ -10,19 +10,20 @@ class UserRegistry extends Component {
       className: ""
     };
     this.activeTimeout = null
-    this.setCSS("JustCreated");
+  }
+
+  componentDidMount() {
+  	this.setCSS("JustCreated");
   }
 
   //JustCreated, JustVoted, Inactive, QuizComplete
 
   setCSS(cssClass) {
   	var _this = this;
-
-  	const fullClassName = "UserName " + cssClass
-  	this.setState({className: fullClassName});
+  	this.setState({className: cssClass});
 
   	clearTimeout(this.activeTimeout);
-  	this.activeTimeout = setTimeout(function() { _this.setCSS("Inactive") }, 5000);
+  	this.activeTimeout = setTimeout(function() { _this.setCSS("Inactive") }, 2000);
   }
 
 	render() {

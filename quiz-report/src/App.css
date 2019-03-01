@@ -45,7 +45,7 @@
 
 /*registry*/
 .JustCreated {
-  animation: name-spin 1 2s linear;
+  animation: name-spin 1 1s linear;
   background-color: #147832;
 }
 

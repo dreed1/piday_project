@@ -23,11 +23,11 @@ names = NameRegistrar()
 #socket comms
 @socketio.on('connect')
 def post_all_the_data():
-  post_user_state()
+  post_user_registry_state()
   post_quiz_state()
 
-def post_user_state():
-  # print("posting user registry")
+def post_user_registry_state():
+  print("posting user registry state")
   emit('user registry state',
     {
       "user_names" :user_cache.all_registered_names(),
@@ -38,24 +38,21 @@ def post_user_state():
     broadcast=True
   )
 
-def post_user_registry(new_username):
-  # print("posting new user")
-  emit('user registry change', { "new_username" :new_username }, namespace='/', broadcast=True)
-
 def post_quiz_state():
-  # print("posting quiz state")
-  emit('quiz state', {"quiz_results" : qm.quiz_state()}, namespace='/', broadcast=True)
-
-def post_answer_updated(answer_id, question_id):
-  # print("posting new count for an answer")
-  newCount = qm.get_count_for_answer(answer_id, question_id)
-  emit('new answer', {"answer_id" : answer_id, "question_id": question_id, "count": newCount}, namespace='/', broadcast=True)
+  print("posting quiz state")
+  emit('quiz state',
+    {
+      "quiz_state" : qm.quiz_state()
+    },
+    namespace='/',
+    broadcast=True
+  )
 
 def names_have_been_reset():
   post_all_the_data()
 
-def quiz_reset():
-  emit('quiz reset', {"foo" : "bar"}, namespace='/', broadcast=True)
+def quiz_has_been_reset():
+  post_all_the_data()
 
 
 #api routes
@@ -76,7 +73,8 @@ def _register_user_with_ip(user_ip):
   else:
     user_name = names.name_me()
     user_cache.register_user(user_ip, user_name)
-    post_user_registry(user_name)
+    post_user_registry_state()
+    # post_user_registry(user_name)
   return user_name
 
 @app.route("/next_question")
@@ -105,8 +103,7 @@ def _answer_question_with_ip_and_params(user_ip, params):
   question_id = params["question_id"]
   answer_id = params["answer_id"]
   result = qm.answer_question_with_answer_id(user_ip, question_id, answer_id)
-  post_answer_updated(answer_id, question_id)
-  print("Did that work? {}".format(result))
+  post_quiz_state()
   return result
 
 @app.route("/random_name")
@@ -139,6 +136,7 @@ def reset_quiz():
   user_ip = request.remote_addr
   if (should_allow_admin_access(user_ip)):
     qm.reset_quiz()
+    quiz_has_been_reset()
     return json.dumps({"result": "Quiz Reset!"})
   else:
     return json.dumps({"result": "YOU ARE NOT ADMIN PLEASE STAHP"})
@@ -148,6 +146,7 @@ def reset_names():
   user_ip = request.remote_addr
   if (should_allow_admin_access(user_ip)):
     user_cache.reset()
+    names_have_been_reset()
     return json.dumps({"result": "Names Reset!"})
   else:
     return json.dumps({"result": "YOU ARE NOT ADMIN PLEASE STAHP"})

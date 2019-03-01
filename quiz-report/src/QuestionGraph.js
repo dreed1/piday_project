@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import io from 'socket.io-client';
 import { ResponsivePie } from '@nivo/pie'
 
 class QuestionGraph extends Component {
@@ -13,27 +12,6 @@ class QuestionGraph extends Component {
     };
     ;
   }
-
-  componentDidMount() {
-		this.socketStuff();
-	}
-
-	socketStuff() {
-		var _this = this;
-		const socket = io('http://localhost');
-		// socket.on('connect', function(){
-		// 	console.log("A Question Graph is connected to the socket");
-		// });
-  	socket.on('new answer', function(msg){
-  		const quizResults = msg["quiz_results"]
-  		if (quizResults) {
-  			_this.setState({questions: quizResults});
-  			console.log("Got new quiz state");
-  			console.log(quizResults);
-  		}
-  	});
-  	// socket.on('disconnect', function(){});
-	}
 
   poorlyChooseARandomColorPalette() {
   	const allColorPalettes = ['nivo', 'category10', 'accent', 'dark2', 'paired', 'pastel1', 'pastel2'];
@@ -106,7 +84,7 @@ class QuestionGraph extends Component {
                 "itemHeight": 18,
                 "itemTextColor": "#999",
                 "symbolSize": 24,
-                "symbolShape": "circle",
+                "symbolShape": "diamond",
                 "effects": [
                     {
                         "on": "hover",
