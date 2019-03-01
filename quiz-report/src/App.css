@@ -23,6 +23,10 @@
   color: #61dafb;
 }
 
+.QuestionGraph {
+  height: 300px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

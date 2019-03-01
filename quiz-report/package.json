@@ -7,7 +7,10 @@
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-scripts": "2.1.5",
-    "socket.io-react": "^1.2.0"
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
+    "socket.io-react": "^1.2.0",
+    "uws": "10.148.1"
   },
   "scripts": {
     "start": "react-scripts start",

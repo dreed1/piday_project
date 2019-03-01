@@ -20,6 +20,7 @@ class QuizAnswer(object):
     self.answer_value = "Answer value"
     self.image_url = "https://mymodernmet.com/wp/wp-content/uploads/2018/04/cats-in-food-11.jpg"
     self.answer_type = AnswerType.text
+    self.user_ips_with_answer = []
     self.process_dictionary(dictionary)
 
   def process_dictionary(self, dict):
@@ -29,14 +30,19 @@ class QuizAnswer(object):
     if dict.get(answer_image_key, None) is not None:
       self.image_url = dict[answer_image_key]
 
-  def to_dict(self):
-    return {
+  def to_dict(self, include_answer_state=False):
+    d = {
       "id": self.id,
       "text": self.answer_text,
       "value": self.answer_value,
       "answer_type": self.answer_type.value,
       "image_url": self.image_url
     }
+
+    if include_answer_state:
+      d.update({"user_ips_with_answer": self.user_ips_with_answer})
+
+    return d
 
 
 class QuizQuestion(object):
@@ -53,9 +59,16 @@ class QuizQuestion(object):
       answer = QuizAnswer(answer_dict)
       self.answers.append(answer)
 
-  def to_dict(self):
+  def process_answer_with_user_ip(self, answer_id, user_ip_string) -> bool:
+    for answer in self.answers:
+      if answer.id == answer_id:
+        answer.user_ips_with_answer.append(user_ip_string)
+        return True
+    return False
+
+  def to_dict(self, include_answer_state=False):
     return {
       "id": self.id,
       "question": self.question_text,
-      "answers": [a.to_dict() for a in self.answers]
+      "answers": [a.to_dict(include_answer_state=include_answer_state) for a in self.answers]
     }

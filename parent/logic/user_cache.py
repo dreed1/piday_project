@@ -24,4 +24,4 @@ class UserCache(object):
     return None
 
   def all_registered_names(self):
-    return self.ip_to_names_cache.values()
+    return list(self.ip_to_names_cache.values())

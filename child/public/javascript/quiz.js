@@ -1,10 +1,4 @@
 class Answer extends React.Component {
-  // {
-  //   "text": self.answer_text,
-  //   "value": self.answer_value,
-  //   "answer_type": self.answer_type.value,
-  //   "image_url": self.image_url
-  // }
   constructor(props) {
     super(props);
     console.log("Creating a new answer")
@@ -12,6 +6,7 @@ class Answer extends React.Component {
       error: null,
       isLoaded: false,
       id: props.id,
+      question_id: props.question_id,
       text: props.text,
       value: props.value,
       answer_type: props.answer_type,
@@ -27,7 +22,7 @@ class Answer extends React.Component {
 
   answerQuestion() {
     console.log("trying to answer the question");
-    fetch("http://0.0.0.0/answer_question", 
+    fetch("http://0.0.0.0/answer_question",
       {
         method: 'POST',
         headers: {
@@ -36,6 +31,8 @@ class Answer extends React.Component {
         },
         body: JSON.stringify({
           value: this.state.value,
+          answer_id: this.state.id,
+          question_id: this.state.question_id,
         })
       })
       .then(
@@ -78,7 +75,10 @@ class Question extends React.Component {
   }
 
   render() {
-    const answersUI = this.state.answers.map((a) => <Answer key={a.id} text={a.text} value={a.value} answer_type={a.answer_type} image_url={a.image_url} questionAnswered={this.props.questionAnswered} />);
+    const _this = this;
+    const question_id = this.props.id;
+    console.log("My question id: " + question_id);
+    const answersUI = this.state.answers.map((a) => <Answer key={a.id} id={a.id} question_id={question_id} text={a.text} value={a.value} answer_type={a.answer_type} image_url={a.image_url} questionAnswered={this.props.questionAnswered} />);
     return (
       <div>
         <div className="question">Q: {this.state.question}</div>
@@ -110,7 +110,7 @@ class Quiz extends React.Component {
     console.log("asking for next question")
     this.setState({
       isLoaded: false
-    }) 
+    })
     fetch("http://0.0.0.0/next_question")
       .then(res => res.json())
       .then(
@@ -118,7 +118,7 @@ class Quiz extends React.Component {
           if (result.question.length > 0) {
             console.log("got a new question or something")
             this.setState({
-              isLoaded: true, 
+              isLoaded: true,
               questions: this.state.questions.concat([result]),
               currentQuestion: this.state.currentQuestion + 1
             });
@@ -156,9 +156,9 @@ class Quiz extends React.Component {
       if (thisQuestion) {
         console.log("rendering the new one")
         return (
-          <Question question={thisQuestion.question} key={thisQuestion.id} answers={thisQuestion.answers} questionAnswered={this.questionAnswered} />
-        );  
-      } 
+          <Question question={thisQuestion.question} key={thisQuestion.id} id={thisQuestion.id} answers={thisQuestion.answers} questionAnswered={this.questionAnswered} />
+        );
+      }
     }
     return (
       <div key="quizDone">I'm guessing you finished the quiz, or you broke the API.... not exactly sure which.</div>
