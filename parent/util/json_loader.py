@@ -1,10 +1,12 @@
 from os.path import expanduser
+import os
 import json
 
-home_directory = expanduser("~")
+cwd = os.getcwd()
+print(cwd)
 # TODO: make this relative-- doesnt work on all my laptops
-names_file = "{}/code/raspi/piday_project/parent/json_files/names.json".format(home_directory)
-quiz_file = "{}/code/raspi/piday_project/parent/json_files/quiz.json".format(home_directory)
+names_file = "{}/parent/json_files/names.json".format(cwd)
+quiz_file = "{}/parent/json_files/quiz.json".format(cwd)
 
 class JsonFileLoader(object):
   @staticmethod

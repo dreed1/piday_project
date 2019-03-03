@@ -1,0 +1,1 @@
+yarn --cwd ./quiz-report start

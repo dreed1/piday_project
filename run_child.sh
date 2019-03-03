@@ -1,0 +1,1 @@
+nodemon ./child/index.js

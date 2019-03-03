@@ -125,7 +125,6 @@ def should_allow_admin_access(ip_address):
 @app.route('/admin/')
 def render_admin():
   user_ip = request.remote_addr
-  print("type of user IP is '{}'".format(type(user_ip)))
   if (should_allow_admin_access(user_ip)):
     return render_template('admin.html')
   else:
