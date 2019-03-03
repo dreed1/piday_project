@@ -12,7 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quizState: {},
+      quizState: [],
       allUsernames: [],
       userCount: 0,
       allUsers: {},
@@ -79,7 +79,9 @@ class App extends Component {
               <RegistryDisplay />
             </UserRegistryCountContext.Provider>
           </UserRegistryNamesContext.Provider>
-          <QuizDisplay />
+          <QuizStateContext.Provider value={this.state.quizState}>
+            <QuizDisplay />
+          </QuizStateContext.Provider>
         </div>
       </div>
     );

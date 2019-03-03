@@ -83,7 +83,7 @@ class QuestionGraph extends Component {
                 "itemWidth": 120,
                 "itemHeight": 18,
                 "itemTextColor": "#999",
-                "symbolSize": 24,
+                "symbolSize": 18,
                 "symbolShape": "diamond",
                 "effects": [
                     {
