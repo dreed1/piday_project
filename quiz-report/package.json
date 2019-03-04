@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "@nivo/pie": "^0.52.1",
+    "prop-types": "^15.7.2",
     "react": "^16.8.3",
+    "react-chartist": "^0.13.3",
     "react-dom": "^16.8.3",
     "react-scripts": "2.1.5",
     "socket.io": "^2.2.0",

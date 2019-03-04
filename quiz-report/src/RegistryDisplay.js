@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import io from 'socket.io-client';
 import UserRegistry from './UserRegistry';
-import { UserRegistryNamesContext, UserRegistryCountContext } from './ComponentContexts';
+import { UserRegistryNamesContext } from './ComponentContexts';
 
 class RegistryDisplay extends Component {
 	constructor(props) {
@@ -9,18 +9,14 @@ class RegistryDisplay extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      userNames: []
+      userCount: this.props.userCount
     };
   }
 
 	render() {
     return (
       <div className="RegistryDisplay">
-        <UserRegistryCountContext.Consumer>
-          {userCount => (
-            <div className="RegistryHeader">There are currently {userCount} users registered.</div>
-          )}
-        </UserRegistryCountContext.Consumer>
+        <div className="RegistryHeader">There are currently {this.props.userCount} users registered.</div>
         <UserRegistryNamesContext.Consumer>
           {usernames => (
             <div>

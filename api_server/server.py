@@ -22,14 +22,10 @@ names = NameRegistrar()
 
 #socket comms
 @socketio.on('connect')
-def post_all_the_data():
-  post_user_registry_state()
-  post_quiz_state()
-
-def post_user_registry_state():
-  print("posting user registry state")
-  emit('user registry state',
+def post_state_update():
+  emit('state_update',
     {
+      "quiz_state" : qm.quiz_state(),
       "user_names" :user_cache.all_registered_names(),
       "all_users": user_cache.ip_to_names_cache,
       "user_count": len(user_cache.all_registered_names())
@@ -38,21 +34,11 @@ def post_user_registry_state():
     broadcast=True
   )
 
-def post_quiz_state():
-  print("posting quiz state")
-  emit('quiz state',
-    {
-      "quiz_state" : qm.quiz_state()
-    },
-    namespace='/',
-    broadcast=True
-  )
-
 def names_have_been_reset():
-  post_all_the_data()
+  post_state_update()
 
 def quiz_has_been_reset():
-  post_all_the_data()
+  post_state_update()
 
 
 #api routes
@@ -73,7 +59,7 @@ def _register_user_with_ip(user_ip):
   else:
     user_name = names.name_me()
     user_cache.register_user(user_ip, user_name)
-    post_user_registry_state()
+    post_state_update()
     # post_user_registry(user_name)
   return user_name
 
@@ -103,7 +89,7 @@ def _answer_question_with_ip_and_params(user_ip, params):
   question_id = params["question_id"]
   answer_id = params["answer_id"]
   result = qm.answer_question_with_answer_id(user_ip, question_id, answer_id)
-  post_quiz_state()
+  post_state_update()
   return result
 
 @app.route("/random_name")

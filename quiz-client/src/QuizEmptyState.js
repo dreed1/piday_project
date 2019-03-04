@@ -13,14 +13,13 @@ class QuizEmptyState extends Component {
   }
 
   handleClick() {
-    console.log("You should start/ resume the quiz for this person");
     this.state.clickHandler();
   }
 
   render() {
     return (
-      <div>
-        <div className="StartQuizDescription">This short quiz is cool, fun, and will make you a friend. This is the descriptions, blah blah blah.</div>
+      <div className="StartQuiz">
+        <div className="StartQuizDescription">Hello new friend!. This is a short quiz that I will eventually finish describing. Just like, hit the button I guess..</div>
         <button className="StartQuizButton" onClick={this.handleClick}>Start or resume the quiz.</button>
       </div>
     );

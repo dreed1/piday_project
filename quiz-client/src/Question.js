@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Answer from './Answer';
 
-class Question extends React.Component {
+class Question extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +15,6 @@ class Question extends React.Component {
 
   render() {
     const question_id = this.props.id;
-    console.log("My question id: " + question_id);
     const answersUI = this.state.answers.map((a) => 
       <Answer key={a.id} 
               id={a.id} 

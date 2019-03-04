@@ -3,7 +3,7 @@ import Confetti from 'react-confetti';
 import Question from './Question';
 import QuizEmptyState from './QuizEmptyState';
 
-class Quiz extends React.Component {
+class Quiz extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,13 +11,16 @@ class Quiz extends React.Component {
       isLoaded: false,
       quizComplete: false,
       questions: [],
-      currentQuestion: -1
+      currentQuestion: -1,
+      quizBeganCallback: this.props.quizBeganCallback,
+      quizCompletedCallback: this.props.quizCompletedCallback
     };
     this.questionAnswered = this.questionAnswered.bind(this);
     this.startQuiz = this.startQuiz.bind(this);
   }
 
   startQuiz() {
+    this.state.quizBeganCallback()
     this.getNextQuestion()
   }
 
@@ -56,6 +59,7 @@ class Quiz extends React.Component {
   }
 
   quizFinished() {
+    this.state.quizCompletedCallback();
     this.setState({quizComplete:true});
   }
 

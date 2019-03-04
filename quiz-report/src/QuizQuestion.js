@@ -16,21 +16,16 @@ class QuizQuestion extends Component {
     };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log("telling quiz question to update")
-    return true
-  }
-
 	render() {
     const _this = this;
 		return (
       <div className="QuizQuestion">
-        <div className="QuestionText">{this.state.questionText}</div>
+        <div className="QuestionText">{this.props.questionText}</div>
           <AnswerCountStateContext.Consumer>
           { answerCounts => (
             <div className="QuestionGraph">
               { 
-                <QuestionGraph key={_this.state.questionId} questionId={_this.state.questionId} answers={_this.state.answers} answerCounts={answerCounts} userCount={_this.state.userCount} />
+                <QuestionGraph key={_this.props.questionId} questionId={_this.props.questionId} answers={_this.props.answers} answerCounts={answerCounts} userCount={_this.props.userCount} />
               }
             </div>
           )}

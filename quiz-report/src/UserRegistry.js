@@ -13,6 +13,7 @@ class UserRegistry extends Component {
   }
 
   componentDidMount() {
+    // uncomment to flash the user registry when they first load in.
   	this.setCSS("JustCreated");
   }
 
@@ -32,6 +33,7 @@ class UserRegistry extends Component {
 
   reset() {
     clearTimeout(this.activeTimeout);
+    this.setState({className: "Inactive"});
     // this.setCSS("Inactive");
   }
 

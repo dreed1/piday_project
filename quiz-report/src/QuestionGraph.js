@@ -14,8 +14,8 @@ class QuestionGraph extends Component {
       userCount: this.props.userCount,
       graphData: []
     };
-    console.log("graph state")
-    console.log(this.state)
+    // console.log("graph state")
+    // console.log(this.state)
   }
 
   poorlyChooseARandomColorPalette() {
@@ -25,62 +25,37 @@ class QuestionGraph extends Component {
   	return thisPalette;
   }
 
-  componentDidMount() {
-    this.updateGraphData();
-  }
-
-  updateGraphData() {
-    console.log("updating graph data!")
-    const graphData = this.generateGraphData();
-    this.setState({graphData: graphData});
-    this.forceUpdate()
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    this.updateGraphData()
-    console.log("telling question graph to update")
-    return true
-  }
-
-  // componentDidUpdate(prevProps) {
-  //   this.updateGraphData()
-  // }
-
   generateGraphData() {
     var _this = this;
     var answersReceived = 0
-    var graphData = this.state.answers.map((a) => {
-      var userCountForThisAnswer = _this.state.answerCounts[a.id] || 0
+    var graphData = this.props.answers.map((a) => {
+      var userCountForThisAnswer = _this.props.answerCounts[a.id] || 0
       answersReceived += userCountForThisAnswer
-      // console.log("I now have more answers:" + answersReceived)
-      // console.log("And I expect: " + this.props.userCount)
       return ({
         "id": a.text,
         "label": a.text,
         "value": userCountForThisAnswer
       });
     });
-    if (answersReceived < this.state.userCount) {
-      // console.log("I didnt get enough answers")
+    if (answersReceived < this.props.userCount) {
       graphData.push({
         "id": "Unanswered",
         "label": "Users without answers",
-        "value": this.state.userCount - answersReceived,
+        "value": this.props.userCount - answersReceived,
         "color": "hsl(0, 84%, 58%)"
       })
     }
-    console.log('graph data')
-    console.log(graphData)
+    
     return graphData;
   }
 
 	render() {
-		const palette = this.state.colorPalette;
-    var graphData = this.state.graphData;
-    console.log("graph should be updating")
+		const palette = this.props.colorPalette;
+    var graphData = this.generateGraphData();
+    
 		return (
         <ResponsivePie
-        data={this.state.graphData}
+        data={graphData}
         margin={{
             "top": 40,
             "right": 40,
