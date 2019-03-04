@@ -1,0 +1,1 @@
+sudo python ./api_server/server.py

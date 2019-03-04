@@ -1,5 +1,3 @@
-TODO: pip requirements file
 TODO: makefile / bash script to autorun stuff
 TODO: explain everything
-TODO: make sure node works right on all computers
-TODO: FIX ALL THE NESTED STATE UPDATES, THEY SHOULDNT BE NESTED
+TODO: FIGURE OUT HOW TO GET THE PIE CHARTS TO UPDATE, THEY ARE KILLING ME

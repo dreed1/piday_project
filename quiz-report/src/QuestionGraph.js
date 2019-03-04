@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ResponsivePie } from '@nivo/pie'
+import { ResponsivePie } from '@nivo/pie';
 
 class QuestionGraph extends Component {
 	constructor(props) {
@@ -7,28 +7,80 @@ class QuestionGraph extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      graphData: this.props.graphData,
-      colorPalette: this.poorlyChooseARandomColorPalette()
+      colorPalette: this.poorlyChooseARandomColorPalette(),
+      questionId: this.props.questionId,
+      answers: this.props.answers,
+      answerCounts: this.props.answerCounts,
+      userCount: this.props.userCount,
+      graphData: []
     };
-    ;
+    console.log("graph state")
+    console.log(this.state)
   }
 
   poorlyChooseARandomColorPalette() {
   	const allColorPalettes = ['nivo', 'category10', 'accent', 'dark2', 'paired', 'pastel1', 'pastel2'];
   	var index = Math.floor(Math.random() * 10000) % allColorPalettes.length;
   	const thisPalette = allColorPalettes[index];
-  	console.log("this pallete: " + thisPalette)
-  	console.log("from " + index)
   	return thisPalette;
-  	// this.setState({colorPalette: allColorPalettes[index]});
+  }
+
+  componentDidMount() {
+    this.updateGraphData();
+  }
+
+  updateGraphData() {
+    console.log("updating graph data!")
+    const graphData = this.generateGraphData();
+    this.setState({graphData: graphData});
+    this.forceUpdate()
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    this.updateGraphData()
+    console.log("telling question graph to update")
+    return true
+  }
+
+  // componentDidUpdate(prevProps) {
+  //   this.updateGraphData()
+  // }
+
+  generateGraphData() {
+    var _this = this;
+    var answersReceived = 0
+    var graphData = this.state.answers.map((a) => {
+      var userCountForThisAnswer = _this.state.answerCounts[a.id] || 0
+      answersReceived += userCountForThisAnswer
+      // console.log("I now have more answers:" + answersReceived)
+      // console.log("And I expect: " + this.props.userCount)
+      return ({
+        "id": a.text,
+        "label": a.text,
+        "value": userCountForThisAnswer
+      });
+    });
+    if (answersReceived < this.state.userCount) {
+      // console.log("I didnt get enough answers")
+      graphData.push({
+        "id": "Unanswered",
+        "label": "Users without answers",
+        "value": this.state.userCount - answersReceived,
+        "color": "hsl(0, 84%, 58%)"
+      })
+    }
+    console.log('graph data')
+    console.log(graphData)
+    return graphData;
   }
 
 	render() {
 		const palette = this.state.colorPalette;
-		var graphData = this.state.graphData;
+    var graphData = this.state.graphData;
+    console.log("graph should be updating")
 		return (
         <ResponsivePie
-        data={graphData}
+        data={this.state.graphData}
         margin={{
             "top": 40,
             "right": 40,

@@ -1,1 +1,0 @@
-sudo python ./parent/server.py

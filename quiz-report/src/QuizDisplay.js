@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { QuizStateContext } from './ComponentContexts';
+import { QuizStateContext, UserRegistryCountContext } from './ComponentContexts';
 import QuizQuestion from './QuizQuestion';
 
 class QuizDisplay extends Component {
@@ -7,20 +7,31 @@ class QuizDisplay extends Component {
     super(props);
     this.state = {
       error: null,
-      isLoaded: false,
-      questions: []
+      isLoaded: false
     };
+    // console.log("quiz display:")
+    // console.log(this.state)
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("telling quiz display to update")
+    return true
   }
 
 	render() {
-		// const questions = this.state.questions.map((question) => <QuizQuestion key={question.id} questionText={question.question} answers={question.answers}/>);
 		return (
 			<div className="QuizContainer">
 				<QuizStateContext.Consumer>
           {quizState => (
-            <div className="QuizDisplay">
-              { quizState.map((question) => { return <QuizQuestion key={question.id} questionText={question.question} answers={question.answers}/>})}
-            </div>
+            <UserRegistryCountContext.Consumer>
+              { userCount => (              
+                <div className="QuizDisplay">
+                  { quizState.map((question) => { 
+                    return <QuizQuestion key={question.id} questionId={question.id} questionText={question.question} answers={question.answers} userCount={userCount}/>}
+                  )}
+                </div>
+              )}
+            </ UserRegistryCountContext.Consumer>
           )}
         </QuizStateContext.Consumer>
        </div>

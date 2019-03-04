@@ -1,0 +1,91 @@
+{
+  "questions": [
+    {
+      "question": "Which do you prefer?",
+      "answers": [
+        {
+          "display_text": "Dogs",
+          "backend_value": "dogs",
+          "answer_type": "image",
+          "image_url": "https://img.huffingtonpost.com/asset/5b7fdeab1900001d035028dc.jpeg?cache=sixpwrbb1s&ops=1910_1000"
+        },
+        {
+          "display_text": "Cats",
+          "backend_value": "cats",
+          "answer_type": "text",
+          "image_url": "http://sites.psu.edu/siowfa15/wp-content/uploads/sites/29639/2015/10/cat.jpg"
+        }
+      ]
+    },
+    {
+      "question": "Who is the best backstreet boy?",
+      "answers": [
+        {
+          "display_text": "Kevin",
+          "backend_value": "kevin",
+          "answer_type": "image",
+          "image_url": "http://www4.pictures.zimbio.com/gi/Kevin+Richardson+Backstreet+Boys+Appearance+PrCtuWcpt1Al.jpg"
+        },
+        {
+          "display_text": "AJ",
+          "backend_value": "aj",
+          "image_url": "https://theautographbank.com/wp-content/uploads/2017/11/A.J.-McLean-Rock-8x10-12-20-2016-0001.jpg",
+          "answer_type": "image"
+        },
+        {
+          "display_text": "Howie",
+          "backend_value": "howie",
+          "image_url": "https://i.pinimg.com/originals/aa/32/d5/aa32d5954a775833b380ea32ed0a1274.jpg",
+          "answer_type": "image"
+        },
+
+        {
+          "display_text": "Brian",
+          "backend_value": "brian",
+          "image_url": "https://i.pinimg.com/originals/b5/7f/5f/b57f5f4bdb854f0205e634e6df944d59.jpg",
+          "answer_type": "image"
+        },
+        {
+          "display_text": "Nick",
+          "backend_value": "nick",
+          "image_url": "http://theladiesfinger.com/wp-content/uploads/2017/11/Screen-Shot-2017-11-23-at-11.16.10-AM.png",
+          "answer_type": "image"
+        }
+      ]
+    },
+    {
+      "question": "What's for dinner?",
+      "answers": [
+        {
+          "display_text": "I dunno",
+          "backend_value": "i dunno",
+          "answer_type": "text",
+          "image_url": "https://www.valuetrend.ca/wp-content/uploads/2017/10/i-dunno.png"
+        },
+        {
+          "display_text": "Whatever you like",
+          "backend_value": "whatever",
+          "answer_type": "text",
+          "image_url": "http://www.quickmeme.com/img/fd/fd4eb556828ca63e52c9983370a36991d66f9ebff5b6db033f06965adcf688bd.jpg"
+        }
+      ]
+    },
+    {
+      "question": "Which is cooler?",
+      "answers": [
+        {
+          "display_text": "The mountains",
+          "backend_value": "mountains",
+          "answer_type": "image",
+          "image_url": "https://images.spot.im/v1/production/sf6qb84n5rhn9vpy6ytd"
+        },
+        {
+          "display_text": "The ocean",
+          "backend_value": "ocean",
+          "image_url": "https://kids.nationalgeographic.com/content/dam/kids/photos/articles/Nature/H-P/Habitats/Ocean/wave.ngsversion.1500050062134.adapt.945.1.jpg",
+          "answer_type": "image"
+        }
+      ]
+    }
+  ]
+}

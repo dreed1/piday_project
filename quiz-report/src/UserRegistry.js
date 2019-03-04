@@ -16,6 +16,10 @@ class UserRegistry extends Component {
   	this.setCSS("JustCreated");
   }
 
+  componentWillUnmount() {
+    this.reset();
+  }
+
   //JustCreated, JustVoted, Inactive, QuizComplete
 
   setCSS(cssClass) {
@@ -24,6 +28,11 @@ class UserRegistry extends Component {
 
   	clearTimeout(this.activeTimeout);
   	this.activeTimeout = setTimeout(function() { _this.setCSS("Inactive") }, 2000);
+  }
+
+  reset() {
+    clearTimeout(this.activeTimeout);
+    // this.setCSS("Inactive");
   }
 
 	render() {
