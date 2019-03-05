@@ -6,7 +6,7 @@ import QuizDisplay from './QuizDisplay';
 import io from 'socket.io-client';
 import './App.css';
 
-const socketHost = 'http://localhost';
+const socketHost = 'http://172.16.156.255';
 
 class App extends Component {
   constructor(props) {
