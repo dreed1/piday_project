@@ -52,7 +52,7 @@ class NameRegistrar extends Component {
       );
     } else if (this.props.quizCompletionState === QuizState.Ongoing) {
       return (
-        <div class="NameRegistrarContainer">
+        <div className="NameRegistrarContainer">
           <div className="NameEntry">
             How's it going {this.state.myName}? Choose one of the images and click it to vote.
           </div>
@@ -60,7 +60,7 @@ class NameRegistrar extends Component {
       );
     } else {
       return (
-        <div class="NameRegistrarContainer">
+        <div className="NameRegistrarContainer">
           <div className="NameEntry">
             My new friend {this.state.myName} is absolutely incredible! They finished the whole project AND took the quiz! WOW.
           </div>
