@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class QuizEmptyState extends Component {
   constructor(props) {
     super(props);
-    console.log("Creating a new answer")
     this.state = {
       error: null,
       isLoaded: false,

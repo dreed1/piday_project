@@ -6,7 +6,7 @@ import QuizDisplay from './QuizDisplay';
 import io from 'socket.io-client';
 import './App.css';
 
-//https://socket.io/get-started/chat/
+const socketHost = 'http://localhost';
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class App extends Component {
       allUsers: {},
       answerCounts: {}
     }
-    this.socket = io('http://localhost');
+    this.socket = io(socketHost);
     this.socketStuff();
   }
 

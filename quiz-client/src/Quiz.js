@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Confetti from 'react-confetti';
 import Question from './Question';
 import QuizEmptyState from './QuizEmptyState';
+import APILocation from './constants';
 
 class Quiz extends Component {
   constructor(props) {
@@ -25,10 +26,11 @@ class Quiz extends Component {
   }
 
   getNextQuestion() {
+    const fetchURL = APILocation + "next_question";
     this.setState({
       isLoaded: false
     })
-    fetch("http://0.0.0.0/next_question")
+    fetch(fetchURL)
       .then(res => res.json())
       .then(
         (result) => {
@@ -69,10 +71,10 @@ class Quiz extends Component {
       const thisQuestion = this.state.questions[this.state.currentQuestion];
       if (thisQuestion) {
         return (
-          <Question question={thisQuestion.question} 
-                    key={thisQuestion.id} 
-                    id={thisQuestion.id} 
-                    answers={thisQuestion.answers} 
+          <Question question={thisQuestion.question}
+                    key={thisQuestion.id}
+                    id={thisQuestion.id}
+                    answers={thisQuestion.answers}
                     questionAnswered={this.questionAnswered} />
         );
       }

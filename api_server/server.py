@@ -1,7 +1,11 @@
+# my raspi's version of pip doesnt want to install this package to the path correctly, this is a hack.
+# it's generally not needed anywhere else.
+import sys
+sys.path.append('/home/pi/.local/lib/python3.5/site-packages')
+
 from flask import Flask, render_template, request
 from flask_cors import CORS, cross_origin
 from flask_socketio import SocketIO, emit
-#https://flask-socketio.readthedocs.io/en/latest/
 
 import datetime
 import json

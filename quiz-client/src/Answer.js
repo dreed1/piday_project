@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import APILocation from './constants';
 
 class Answer extends Component {
   constructor(props) {
@@ -22,7 +23,8 @@ class Answer extends Component {
   }
 
   answerQuestion() {
-    fetch("http://0.0.0.0/answer_question",
+    const fetchURL = APILocation + "answer_question";
+    fetch(fetchURL,
       {
         method: 'POST',
         headers: {

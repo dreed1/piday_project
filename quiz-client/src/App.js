@@ -17,12 +17,10 @@ class App extends Component {
   }
 
   quizBeganCallback() {
-    console.log("hi i began quiz")
     this.setState({quizCompletionState: QuizState.Ongoing})
   }
 
   quizCompletedCallback() {
-    console.log("hi i finished quiz")
     this.setState({quizCompletionState: QuizState.Completed})
   }
 
