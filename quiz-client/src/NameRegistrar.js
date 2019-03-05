@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import QuizState from './enums';
+import APILocation from './Constants';
 
 class NameRegistrar extends Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class NameRegistrar extends Component {
 
   componentDidMount() {
     var _this = this;
-    fetch("http://0.0.0.0/whoami")
+    const fetchURL = APILocation + "whoami";
+    fetch(fetchURL)
       .then(res => res.json())
       .then(
         (result) => {
@@ -38,7 +40,7 @@ class NameRegistrar extends Component {
   render() {
     if (this.props.quizCompletionState === QuizState.NotStarted) {
       return (
-        <div class="NameRegistrarContainer">
+        <div className="NameRegistrarContainer">
           <div>Hi New friend! Let me give you a name. I think I'll call you....</div>
           <div className="NameEntry">
             {this.state.myName}
