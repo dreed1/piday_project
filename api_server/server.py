@@ -85,7 +85,7 @@ def _get_next_question_for_ip(user_ip):
 @app.route("/answer_question", methods=['POST'])
 def answer_question():
   user_ip = request.remote_addr
-  params = json.loads(request.data)
+  params = json.loads(request.data.decode('utf-8'))
   result = _answer_question_with_ip_and_params(user_ip, params)
   return json.dumps({"result": result})
 
