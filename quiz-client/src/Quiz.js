@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Confetti from 'react-confetti';
 import Question from './Question';
 import QuizEmptyState from './QuizEmptyState';
-import APILocation from './constants';
+import APILocation from './Constants';
 
 class Quiz extends Component {
   constructor(props) {

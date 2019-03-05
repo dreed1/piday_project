@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import APILocation from './constants';
+import APILocation from './Constants';
 
 class Answer extends Component {
   constructor(props) {
