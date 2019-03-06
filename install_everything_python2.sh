@@ -1,6 +1,4 @@
-echo "Installing quiz report dependencies"
-yarn --cwd ./quiz-report install
-echo "Installing quiz client dependencies"
-yarn --cwd ./quiz-client install
+./install_report_dependencies.sh
+./install_client_dependencies.sh
 echo "Installing api server dependencies"
 pip install -r ./api_server/requirements.txt
