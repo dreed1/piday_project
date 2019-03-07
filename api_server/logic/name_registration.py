@@ -8,8 +8,8 @@ last_names_key = "last_names"
 class NameRegistrar(object):
   def __init__(self):
     self.used_names = []
-    self.all_first_names = ["Dan", "Jaclyn", "Louie"]
-    self.all_last_names = ["Reed", "Klein", "Cat"]
+    self.all_first_names = []
+    self.all_last_names = []
     self.load_names()
 
   def load_names(self):

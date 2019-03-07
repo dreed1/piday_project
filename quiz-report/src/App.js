@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import {QuizStateContext, AnswerCountStateContext, UserRegistryNamesContext} from './ComponentContexts';
 import RegistryDisplay from './RegistryDisplay';
 import QuizDisplay from './QuizDisplay';
@@ -48,7 +47,6 @@ class App extends Component {
       //quiz state updates
       const quizState = msg["quiz_state"]
       if (quizState) {
-        // console.log("App got new quiz state");
         var answerCounts = {}
         for (var questionIndex in quizState) {
           var question = quizState[questionIndex]

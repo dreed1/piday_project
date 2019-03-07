@@ -24,7 +24,57 @@ user_cache = UserCache()
 qm = QuizMaster()
 names = NameRegistrar()
 
-#socket comms
+# api routes
+@app.route("/whoami")
+def register():
+  user_ip = request.remote_addr
+  user_name = _register_user_with_ip(user_ip)
+  return json.dumps({"your_name": user_name})
+
+@app.route("/next_question")
+def next_question():
+  user_ip = request.remote_addr
+  next_question = _get_next_question_for_ip(user_ip)
+  if next_question:
+    return json.dumps(next_question.to_dict())
+  else:
+    return json.dumps({
+      "question": "",
+      "answers": []
+    })
+
+@app.route("/answer_question", methods=['POST'])
+def answer_question():
+  user_ip = request.remote_addr
+  params = json.loads(request.data.decode('utf-8'))
+  result = _answer_question_with_ip_and_params(user_ip, params)
+  return json.dumps({"result": result})
+
+# logic handlers, in a more mature app I would definitely put these somewhere else
+
+def _register_user_with_ip(user_ip):
+  user_name = ""
+  if user_cache.user_exists_with_ip(user_ip):
+    user_name = user_cache.user_name_for_user_ip(user_ip)
+  else:
+    user_name = names.name_me()
+    user_cache.register_user(user_ip, user_name)
+    post_state_update()
+  return user_name
+
+def _get_next_question_for_ip(user_ip):
+  return qm.get_next_question_for_user(user_ip)
+
+def _answer_question_with_ip_and_params(user_ip, params):
+  question_id = params["question_id"]
+  answer_id = params["answer_id"]
+  result = qm.answer_question_with_answer_id(user_ip, question_id, answer_id)
+  post_state_update()
+  return result
+
+
+# socket comms and message passing
+
 @socketio.on('connect')
 def post_state_update():
   emit('state_update',
@@ -44,74 +94,30 @@ def names_have_been_reset():
 def quiz_has_been_reset():
   post_state_update()
 
+# debug endpoints, you can ignore them unless you're testing to make sure your app works.
 
-#api routes
-@app.route("/")
-def hello():
-   return "Hi!"
-
-@app.route("/whoami")
-def register():
-  user_ip = request.remote_addr
-  user_name = _register_user_with_ip(user_ip)
-  return json.dumps({"your_name": user_name})
-
-def _register_user_with_ip(user_ip):
-  user_name = ""
-  if user_cache.user_exists_with_ip(user_ip):
-    user_name = user_cache.user_name_for_user_ip(user_ip)
-  else:
-    user_name = names.name_me()
-    user_cache.register_user(user_ip, user_name)
-    post_state_update()
-    # post_user_registry(user_name)
-  return user_name
-
-@app.route("/next_question")
-def next_question():
-  user_ip = request.remote_addr
-  next_question = _get_next_question_for_ip(user_ip)
-  if next_question:
-    return json.dumps(next_question.to_dict())
-  else:
-    return json.dumps({
-      "question": "",
-      "answers": []
-    })
-
-def _get_next_question_for_ip(user_ip):
-  return qm.get_next_question_for_user(user_ip)
-
-@app.route("/answer_question", methods=['POST'])
-def answer_question():
-  user_ip = request.remote_addr
-  params = json.loads(request.data.decode('utf-8'))
-  result = _answer_question_with_ip_and_params(user_ip, params)
-  return json.dumps({"result": result})
-
-def _answer_question_with_ip_and_params(user_ip, params):
-  question_id = params["question_id"]
-  answer_id = params["answer_id"]
-  result = qm.answer_question_with_answer_id(user_ip, question_id, answer_id)
-  post_state_update()
-  return result
+@app.route("/hello")
+def say_hello():
+  return json.dumps({"oh_hai": "Hello friend!"})
 
 @app.route("/random_name")
 def random_name():
-  return names.random_name()
+  return json.dumps({"name": names.random_name()})
 
 @app.route("/all_quiz")
 def debug_quiz():
   questions = [q.to_dict() for q in qm.questions]
   return json.dumps(questions)
 
-#admin routes (WONT WORK FOR YOU DO NOT USE)
+# admin routes (WONT WORK FOR YOU DO NOT USE)
 
 # if you arent on the same computer as the server you shouldnt be admin
 # PROTIP: dont do this in a production environment, use a real identity provider and permissions
 def should_allow_admin_access(ip_address):
-  return True#ip_address == '127.0.0.1'
+  #admin_ip = '127.0.0.1'
+  return True#ip_address == admin_ip
 
+# fun fact: this is the only route that returns html.
 @app.route('/admin/')
 def render_admin():
   user_ip = request.remote_addr
@@ -152,6 +158,8 @@ def test_a_bunch_of_users():
   else:
     return json.dumps({"result": "YOU ARE NOT ADMIN PLEASE STAHP"})
 
+
+# Testing and fake logic I used to debug stuff
 
 def _create_fake_user_ips(number_of_fake_users):
   fake_user_ips = []

@@ -5,4 +5,3 @@ export const QuizStateContext = React.createContext([]);
 export const AnswerCountStateContext = React.createContext({});
 
 export const UserRegistryNamesContext = React.createContext({names:[]});
-export const UserRegistryCountContext = React.createContext(0);
