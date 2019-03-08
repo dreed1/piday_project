@@ -1,3 +1,3 @@
 ./install_me_first.sh
-bash
+exec bash
 ./install_client_dependencies.sh
