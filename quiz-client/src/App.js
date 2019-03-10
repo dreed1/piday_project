@@ -3,6 +3,7 @@ import './App.css';
 
 import QuizState from './enums';
 import NameRegistrar from './NameRegistrar';
+import Quiz from './Quiz';
 
 class App extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class App extends Component {
     return (
       <div className="App">
         <NameRegistrar quizCompletionState={this.state.quizCompletionState} />
-        <div>Hello, I'll eventually be a quiz (though I'm not yet)</div>
+        <Quiz quizBeganCallback={this.quizBeganCallback} quizCompletedCallback={this.quizCompletedCallback}/>
       </div>
     );
   }
