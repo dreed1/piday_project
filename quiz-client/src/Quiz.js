@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Confetti from 'react-confetti';
 
 import APILocation from './Constants';
+import Question from './Question';
+import QuizEmptyState from './QuizEmptyState';
 
 class Quiz extends Component {
 	constructor(props) {
@@ -15,6 +17,8 @@ class Quiz extends Component {
       quizBeganCallback: this.props.quizBeganCallback,
       quizCompletedCallback: this.props.quizCompletedCallback
     };
+    this.questionAnswered = this.questionAnswered.bind(this);
+    this.startQuiz = this.startQuiz.bind(this);
   }
 
   getNextQuestion() {
@@ -48,6 +52,15 @@ class Quiz extends Component {
       )
   }
 
+  startQuiz() {
+    this.state.quizBeganCallback()
+    this.getNextQuestion()
+  }
+
+  questionAnswered() {
+    this.getNextQuestion();
+  }
+
   quizFinished() {
   	this.state.quizCompletedCallback();
     this.setState({quizComplete:true});
@@ -56,13 +69,20 @@ class Quiz extends Component {
 	render() {
     //if we didn't complete the quiz, and our current question index is >=0 we must be taking it currently.
     if (!this.state.quizComplete && this.state.currentQuestion >= 0) {
-      return (
-      	<div>You are taking the quiz, and you'd see a question here normally but we didnt finish that yet.</div>
-      );
+      const thisQuestion = this.state.questions[this.state.currentQuestion];
+      if (thisQuestion) {
+        return (
+          <Question question={thisQuestion.question}
+                    key={thisQuestion.id}
+                    id={thisQuestion.id}
+                    answers={thisQuestion.answers}
+                    questionAnswered={this.questionAnswered} />
+        );
+      }
     // if we don't have a good current question index, we must not have started it yet
     } else if (!this.state.quizComplete) {
       return (
-        <div>You havent yet begun to take the quiz.</div>
+        <QuizEmptyState clickHandler={this.startQuiz}/>
       )
     //and if we have set the quiz complete flag, we must be done -- let's celebrate.
     } else {
