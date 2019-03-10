@@ -6,12 +6,7 @@ question_text_key = "question"
 answer_list_key = "answers"
 answer_text_key = "display_text"
 answer_value_key = "backend_value"
-answer_type_key = "answer_type"
 answer_image_key = "image_url"
-
-class AnswerType(enum.Enum):
-  text = 1
-  image = 2
 
 class QuizAnswer(object):
   def __init__(self, dictionary):
@@ -19,14 +14,12 @@ class QuizAnswer(object):
     self.answer_text = "Answer text"
     self.answer_value = "Answer value"
     self.image_url = None
-    self.answer_type = AnswerType.text
     self.user_ips_with_answer = []
     self.process_dictionary(dictionary)
 
   def process_dictionary(self, dict):
     self.answer_text = dict[answer_text_key]
     self.answer_value = dict[answer_value_key]
-    self.answer_type = AnswerType[dict[answer_type_key]]
     if dict.get(answer_image_key, None) is not None:
       self.image_url = dict[answer_image_key]
 
@@ -35,7 +28,6 @@ class QuizAnswer(object):
       "id": self.id,
       "text": self.answer_text,
       "value": self.answer_value,
-      "answer_type": self.answer_type.value,
       "image_url": self.image_url
     }
 

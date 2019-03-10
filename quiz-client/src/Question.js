@@ -15,14 +15,13 @@ class Question extends Component {
 
   render() {
     const question_id = this.props.id;
-    const answersUI = this.state.answers.map((a) => 
-      <Answer key={a.id} 
-              id={a.id} 
-              question_id={question_id} 
-              text={a.text} 
-              value={a.value} 
-              answer_type={a.answer_type} 
-              image_url={a.image_url} 
+    const answersUI = this.state.answers.map((a) =>
+      <Answer key={a.id}
+              id={a.id}
+              question_id={question_id}
+              text={a.text}
+              value={a.value}
+              image_url={a.image_url}
               questionAnswered={this.props.questionAnswered} />
     );
     return (

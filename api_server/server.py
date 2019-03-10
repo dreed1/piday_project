@@ -98,7 +98,7 @@ def quiz_has_been_reset():
 
 @app.route("/hello")
 def say_hello():
-  return json.dumps({"oh_hai": "Hello friend!"})
+  return json.dumps({"hi": "Hello friend!"})
 
 @app.route("/random_name")
 def random_name():

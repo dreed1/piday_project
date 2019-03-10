@@ -12,7 +12,6 @@ class Answer extends Component {
       question_id: props.question_id,
       text: props.text,
       value: props.value,
-      answer_type: props.answer_type,
       image_url: props.image_url
     };
     this.handleClick = this.handleClick.bind(this);

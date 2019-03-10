@@ -3,8 +3,6 @@ import os
 import json
 
 cwd = os.getcwd()
-print(cwd)
-# TODO: make this relative-- doesnt work on all my laptops
 names_file = "{}/api_server/json_files/names.json".format(cwd)
 quiz_file = "{}/api_server/json_files/quiz.json".format(cwd)
 

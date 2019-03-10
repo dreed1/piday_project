@@ -4,9 +4,9 @@
 ## By: Dan Reed
 
 Hi! Welcome to the project, there's 3 parts:
-	* API server
-	* Quiz Client
-	* Quiz Reporting Dashboard
+* API server (/api_server/)
+* Quiz Client (/quiz-client/)
+* Quiz Reporting Dashboard (/quiz-report/)
 
 
 ## Installation/Getting started
