@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import NameRegistrar from './NameRegistrar';
+import Quiz from './Quiz';
 
 class App extends Component {
   constructor(props) {
