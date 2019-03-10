@@ -3,13 +3,12 @@ import React, { Component } from 'react';
 import APILocation from './Constants';
 
 class NameRegistrar extends Component {
-  constructor(props) {
+	constructor(props) {
     super(props);
     this.state = {
       error: null,
       isLoaded: false,
       myName: "I dont have a name",
-      quizCompletionState: this.props.quizCompletionState
     };
   }
 
@@ -40,7 +39,7 @@ class NameRegistrar extends Component {
 	render() {
 		return (
       <div className="NameRegistrarContainer">
-			 <div className="NameEntry">Hi, my name is {this.state.myName}!</div>
+			  <div className="NameEntry">Hi, my name is {this.state.myName}!</div>
       </div>
 		);
 	}
