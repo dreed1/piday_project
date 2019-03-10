@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import APILocation from './Constants';
 
 
@@ -9,6 +10,7 @@ class NameRegistrar extends Component {
       error: null,
       isLoaded: false,
       myName: "I dont have a name",
+
     };
   }
 
