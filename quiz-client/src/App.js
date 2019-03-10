@@ -25,27 +25,12 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.quizCompletionState == QuizState.NotStarted) {
-      return (
-        <div className="App">
-          <NameRegistrar />
-          <button onClick={this.quizBeganCallback}>Start the quiz</button>
-        </div>
-      );
-    } else if (this.state.quizCompletionState == QuizState.Ongoing) {
-      return (
-        <div className="App">
-          You began the quiz.
-          <button onClick={this.quizCompletedCallback}>Finish the quiz</button>
-        </div>
-      );
-    } else {
-      return (
-        <div className="App">
-          You finished!
-        </div>
-      );
-    }
+    return (
+      <div className="App">
+        <NameRegistrar quizCompletionState={this.state.quizCompletionState} />
+        <div>Hello, I'll eventually be a quiz (though I'm not yet)</div>
+      </div>
+    );
   }
 }
 
