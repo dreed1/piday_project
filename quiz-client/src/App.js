@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import QuizState from './enums';
+import NameRegistrar from './NameRegistrar';
 
 class App extends Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class App extends Component {
     if (this.state.quizCompletionState == QuizState.NotStarted) {
       return (
         <div className="App">
+          <NameRegistrar />
           <button onClick={this.quizBeganCallback}>Start the quiz</button>
         </div>
       );
