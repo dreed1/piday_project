@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-
+import QuizState from './enums';
 import APILocation from './Constants';
 
 class NameRegistrar extends Component {
-	constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       error: null,
