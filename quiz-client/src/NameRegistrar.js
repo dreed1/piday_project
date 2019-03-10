@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import APILocation from './Constants';
 
+
 class NameRegistrar extends Component {
   constructor(props) {
     super(props);
