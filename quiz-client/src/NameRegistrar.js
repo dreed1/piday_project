@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-
+import QuizState from './enums';
 import APILocation from './Constants';
 
 class NameRegistrar extends Component {
-	constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       error: null,
       isLoaded: false,
-      myName: ""
+      myName: "I dont have a name",
+      quizCompletionState: this.props.quizCompletionState
     };
   }
 
-	componentDidMount() {
+  componentDidMount() {
     var _this = this;
     const fetchURL = APILocation + "whoami";
     fetch(fetchURL)
@@ -38,7 +39,9 @@ class NameRegistrar extends Component {
 
 	render() {
 		return (
-			<div>Hi, my name is {this.state.myName}!</div>
+      <div className="NameRegistrarContainer">
+			 <div className="NameEntry">Hi, my name is {this.state.myName}!</div>
+      </div>
 		);
 	}
 }
