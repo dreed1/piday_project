@@ -33,7 +33,7 @@ class Quiz extends Component {
               currentQuestion: this.state.currentQuestion + 1
             });
           } else {
-            console.log("You finished the quiz.")
+            this.quizFinished();
           }
         },
         // Note: it's important to handle errors here
@@ -46,6 +46,11 @@ class Quiz extends Component {
           });
         }
       )
+  }
+
+  quizFinished() {
+  	this.state.quizCompletedCallback();
+    this.setState({quizComplete:true});
   }
 
 	render() {
@@ -64,7 +69,7 @@ class Quiz extends Component {
       return (
         <div>
           <Confetti />
-          <div className="QuizCompleteTitle">You finished the quiz</div>
+          <div className="QuizCompleteTitle">You finished the whole quiz! Congratulations!</div>
         </div>
       );
     }
