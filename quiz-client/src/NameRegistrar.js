@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-
+import QuizState from './enums';
 import APILocation from './Constants';
 
 class NameRegistrar extends Component {
-	constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       error: null,
       isLoaded: false,
-      myName: ""
+      myName: "I dont have a name",
+      quizCompletionState: this.props.quizCompletionState
     };
   }
 
-	componentDidMount() {
+  componentDidMount() {
     var _this = this;
     const fetchURL = APILocation + "whoami";
     fetch(fetchURL)
@@ -36,11 +37,37 @@ class NameRegistrar extends Component {
       )
   }
 
-	render() {
-		return (
-			<div> MY NAME IS {this.state.myName} </div>
-		);
-	}
+  render() {
+    if (this.props.quizCompletionState === QuizState.NotStarted) {
+      return (
+        <div className="NameRegistrarContainer">
+          <div>Hi New friend! Let me give you a name. I think I'll call you....</div>
+          <div className="NameEntry">
+            {this.state.myName}
+          </div>
+          <div>...I bet all your friends call you {this.state.myName}. No, Just me?</div>
+          <div>Anyway, this is an app that runs a quiz. At the end there's a small party.</div>
+          <div>Click the red button to begin!</div>
+        </div>
+      );
+    } else if (this.props.quizCompletionState === QuizState.Ongoing) {
+      return (
+        <div className="NameRegistrarContainer">
+          <div className="NameEntry">
+            How's it going {this.state.myName}? Choose one of the images and click it to vote.
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="NameRegistrarContainer">
+          <div className="NameEntry">
+            My new friend {this.state.myName} is absolutely incredible! They finished the whole project AND took the quiz! WOW.
+          </div>
+        </div>
+      );
+    }
+  }
 }
 
 export default NameRegistrar;
