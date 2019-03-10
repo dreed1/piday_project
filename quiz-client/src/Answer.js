@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import APILocation from './Constants';
+
 class Answer extends Component {
 	constructor(props) {
     super(props);
@@ -17,7 +19,38 @@ class Answer extends Component {
   }
 
   handleClick() {
-    console.log("I HAVE BEEN CLICKED, WOO!!!!")
+    this.answerQuestion();
+  }
+
+  answerQuestion() {
+    const fetchURL = APILocation + "answer_question";
+    fetch(fetchURL,
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          value: this.state.value,
+          answer_id: this.state.id,
+          question_id: this.state.question_id,
+        })
+      })
+      .then(
+        (result) => {
+          this.props.questionAnswered();
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
   }
 
 	render() {
