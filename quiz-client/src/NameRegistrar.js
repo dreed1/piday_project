@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import QuizState from './enums';
+
 import APILocation from './Constants';
 
 class NameRegistrar extends Component {
