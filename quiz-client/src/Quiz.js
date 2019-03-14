@@ -1,28 +1,22 @@
 import React, { Component } from 'react';
 import Confetti from 'react-confetti';
+
+import APILocation from './Constants';
 import Question from './Question';
 import QuizEmptyState from './QuizEmptyState';
-import APILocation from './Constants';
 
 class Quiz extends Component {
-  constructor(props) {
+	constructor(props) {
     super(props);
     this.state = {
       error: null,
       isLoaded: false,
       quizComplete: false,
       questions: [],
-      currentQuestion: -1,
-      quizBeganCallback: this.props.quizBeganCallback,
-      quizCompletedCallback: this.props.quizCompletedCallback
+      currentQuestion: -1
     };
     this.questionAnswered = this.questionAnswered.bind(this);
     this.startQuiz = this.startQuiz.bind(this);
-  }
-
-  startQuiz() {
-    this.state.quizBeganCallback()
-    this.getNextQuestion()
   }
 
   getNextQuestion() {
@@ -56,16 +50,19 @@ class Quiz extends Component {
       )
   }
 
+  startQuiz() {
+    this.getNextQuestion()
+  }
+
   questionAnswered() {
     this.getNextQuestion();
   }
 
   quizFinished() {
-    this.state.quizCompletedCallback();
     this.setState({quizComplete:true});
   }
 
-  render() {
+	render() {
     //if we didn't complete the quiz, and our current question index is >=0 we must be taking it currently.
     if (!this.state.quizComplete && this.state.currentQuestion >= 0) {
       const thisQuestion = this.state.questions[this.state.currentQuestion];
@@ -96,4 +93,3 @@ class Quiz extends Component {
 }
 
 export default Quiz;
-

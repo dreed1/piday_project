@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+
 import APILocation from './Constants';
 
 class Answer extends Component {
-  constructor(props) {
+	constructor(props) {
     super(props);
     console.log("Creating a new answer")
     this.state = {
@@ -52,7 +53,7 @@ class Answer extends Component {
       )
   }
 
-  render() {
+	render() {
     var textContent = <div className="AnswerText">{this.state.text}</div>;
     var imageContent = null;
     if (this.state.image_url) {

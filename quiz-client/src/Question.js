@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Answer from './Answer';
+
+import Answer from './Answer'
 
 class Question extends Component {
-  constructor(props) {
+	constructor(props) {
     super(props);
     this.state = {
       error: null,
@@ -13,7 +14,7 @@ class Question extends Component {
     };
   }
 
-  render() {
+	render() {
     const question_id = this.props.id;
     const answersUI = this.state.answers.map((a) =>
       <Answer key={a.id}
