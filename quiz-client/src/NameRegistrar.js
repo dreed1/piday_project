@@ -8,8 +8,7 @@ class NameRegistrar extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      myName: "I dont have a name",
-      quizCompletionState: this.props.quizCompletionState
+      myName: "I dont have a name"
     };
   }
 
