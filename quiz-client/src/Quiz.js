@@ -13,9 +13,7 @@ class Quiz extends Component {
       isLoaded: false,
       quizComplete: false,
       questions: [],
-      currentQuestion: -1,
-      quizBeganCallback: this.props.quizBeganCallback,
-      quizCompletedCallback: this.props.quizCompletedCallback
+      currentQuestion: -1
     };
     this.questionAnswered = this.questionAnswered.bind(this);
     this.startQuiz = this.startQuiz.bind(this);
@@ -53,7 +51,6 @@ class Quiz extends Component {
   }
 
   startQuiz() {
-    this.state.quizBeganCallback()
     this.getNextQuestion()
   }
 
@@ -62,7 +59,6 @@ class Quiz extends Component {
   }
 
   quizFinished() {
-  	this.state.quizCompletedCallback();
     this.setState({quizComplete:true});
   }
 
