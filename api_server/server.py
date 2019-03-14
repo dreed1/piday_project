@@ -114,8 +114,8 @@ def debug_quiz():
 # if you arent on the same computer as the server you shouldnt be admin
 # PROTIP: dont do this in a production environment, use a real identity provider and permissions
 def should_allow_admin_access(ip_address):
-  #admin_ip = '127.0.0.1'
-  return True#ip_address == admin_ip
+  admin_ip = '127.0.0.1'
+  return ip_address == admin_ip
 
 # fun fact: this is the only route that returns html.
 @app.route('/admin/')
