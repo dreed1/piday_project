@@ -17,7 +17,7 @@ class App extends Component {
     return (
       <div className="App">
         <NameRegistrar />
-        <div>I will be the quiz soon!</div>
+        <Quiz />
       </div>
     );
   }
